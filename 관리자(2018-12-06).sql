@@ -13,3 +13,13 @@ CREATE USER user1 IDENTIFIED BY 1234;
 --2. 권한부여 : DCL 명령어 이용, GRANT와 REVOKE
 GRANT CONNECT TO user1;     --user1에게 로그인 권한만 부여
 REVOKE CONNECT FROM user1;  --user1에게 로그인 권한 취소
+
+CREATE USER user2 IDENTIFIED BY 1234;
+GRANT CONNECT TO user2;
+
+--CREATE로 생성한 객체를 삭제할 때에는 DROP 키워드로 삭제한다.
+DROP USER user2 ;       --한번 삭제된 사용자는 그 내용을 모두 삭제하기때문에 복구X
+
+--오라클 학습 환경에서 다양한 명령들을 수행하고 테스트해보기위해서 우리는 새로운 사용자에게 SYSDBA보다 한단계 낮은 DBA권한을 부여해서
+--학습을 진행한다.
+GRANT DBA TO user1;         --DVA는 DDL, DML, DCL 명령들을 수행할 수 있다.
