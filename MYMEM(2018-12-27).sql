@@ -11,6 +11,8 @@ DROP TABLE tbl_score;
 
 SELECT COUNT(*) FROM tbl_score;
 
+SELECT * FROM tbl_score;
+
 SELECT g_id, g_stname, g_subject, g_score FROM tbl_score;
 
 SELECT g_subject, SUM(g_score) AS 과목총점, ROUND(SUM(g_score)/100,2) AS 과목평균 FROM tbl_score GROUP BY g_subject;
@@ -106,5 +108,17 @@ ALTER TABLE tbl_score ADD g_bcode CHAR(5);
 
 UPDATE tbl_score S SET S.g_bcode = (SELECT SB.sb_num FROM tbl_subject SB WHERE S.g_subject = SB.sb_name);
 
-SELECT S.g_bcode, SB.sb_num, S.g_subject, SB.sb_name FROM tbl_score S LEFT JOIN tbl_subject SB ON S.g_subject = SB.sb_name WHERE SB.sb_name IS NULL;
+SELECT S.g_bcode, SB.sb_num, S.g_subject, SB.sb_name FROM tbl_score S LEFT JOIN tbl_subject SB ON S.g_subject = SB.sb_name;
 
+CREATE VIEW 통합성적일람표
+AS
+SELECT T.st_name, 
+SUM(DECODE(g_subject, '국어', g_score, 0)) AS 국어,
+SUM(DECODE(g_subject, '수학', g_score, 0)) AS 수학,
+SUM(DECODE(g_subject, '과학', g_score, 0)) AS 과학,
+SUM(DECODE(g_subject, '영어', g_score, 0)) AS 영어,
+SUM(DECODE(g_subject, '국사', g_score, 0)) AS 국사,
+SUM(DECODE(g_subject, '미술', g_score, 0)) AS 미술 
+FROM tbl_score S LEFT JOIN tbl_student T ON S.g_stnum = T.st_num GROUP BY T.st_name ;
+
+SELECT * FROM 통합성적일람표;
