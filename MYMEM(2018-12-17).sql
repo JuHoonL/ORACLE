@@ -50,7 +50,7 @@ SELECT LPAD(1,5,'0') FROM DUAL;         --숫자1을 문자열로 바꾸고 5개의 문자열로
 SELECT RPAD(1,5,'0') FROM DUAL;         --LPAD와 반대로 맨앞에 1을 써주고 나머지 0으로 채워라('10000')
 SELECT LPAD(1,5,'0'), RPAD(1,5,'0') FROM DUAL;  --LPAD와 RPAD ('00001' / '10000')
 
-INSERT test(t_num) VALUES(LPAD(1,3,'0');    -- t_num에 001을 넣어라
+INSERT INTO test(t_num) VALUES(LPAD(1,3,'0'));    -- t_num에 001을 넣어라
 
 --공백제거 TRIM L 왼쪽 R 오른쪽
 SELECT LTRIM(' KOREA 대한민국 ') FROM DUAL;
@@ -70,6 +70,8 @@ CREATE VIEW 월별통계
 AS
 SELECT SUBSTR(io_date,1,7) AS 월별, io_inout AS 구분, COUNT(io_total) AS 개수, SUm(io_total) AS 통계 FROM tbl_iolist 
 GROUP BY SUBSTR(io_date,1,7), io_inout ORDER BY SUBSTR(io_date,1,7);
+
+DROP VIEW 월별통계;
 
 SELECT * FROM 월별통계 WHERE 월별 BETWEEN '2018-03' AND '2018-06';
 
